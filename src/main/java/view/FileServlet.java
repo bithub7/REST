@@ -51,7 +51,7 @@ public class FileServlet extends HttpServlet {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream inputStream = filePart.getInputStream();
         String path = filePath + fileName;
-        Files.copy(inputStream, new java.io.File(path).toPath());
+        Files.copy(inputStream, new java.io.File(path).toPath()); //NoSuchFileException
         Timestamp created =  new Timestamp(new Date().getTime());
         File file = fileService.save(fileName, path, created);
         eventService.save(user_id, file.getId(), created, EventType.CREATE);
