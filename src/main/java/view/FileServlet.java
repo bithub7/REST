@@ -31,8 +31,9 @@ public class FileServlet extends HttpServlet {
 
     private FileService fileService = new FileService();
     private Gson gson = new Gson();
-    private String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploaded_file\\"; // с этим нет
-    //private String filePath = "C:\\Users\\PC\\Desktop\\work\\"; //с этим путем все сохраняется
+    private String filePath = "C:\\Users\\PC\\Desktop\\work\\"; //работает
+    //private String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploaded_files\\"; //не работает
+    //private String filePath = System.getenv("USERPROFILE") + "\\src\\main\\resources\\uploaded_files\\"; //не работает
 
     private EventService eventService = new EventService();
     private UserService userService = new UserService();
