@@ -31,9 +31,10 @@ public class FileServlet extends HttpServlet {
 
     private FileService fileService = new FileService();
     private Gson gson = new Gson();
-    private String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploaded_file\\";
-    private EventService eventService = new EventService();
+    private String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploaded_file\\"; // с этим нет
+    //private String filePath = "C:\\Users\\PC\\Desktop\\work\\"; //с этим путем все сохраняется
 
+    private EventService eventService = new EventService();
     private UserService userService = new UserService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -50,10 +51,11 @@ public class FileServlet extends HttpServlet {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream inputStream = filePart.getInputStream();
         String path = filePath + fileName;
-        Files.copy(inputStream, new java.io.File(filePath).toPath()); //NoSuchFileException
+        Files.copy(inputStream, new java.io.File(path).toPath());
         Timestamp created =  new Timestamp(new Date().getTime());
         File file = fileService.save(fileName, path, created);
         eventService.save(user_id, file.getId(), created, EventType.CREATE);
+        doPost(request, response);
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
