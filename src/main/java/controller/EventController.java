@@ -1,6 +1,7 @@
 package controller;
 
 import model.Event;
+import model.EventType;
 import repository.EventRepository;
 import repository.hibernate.EventRepositoryImpl;
 
@@ -28,6 +29,10 @@ public class EventController {
 
     public void setEventCreated(Timestamp created){
         this.model.setCreated(created);
+    }
+
+    public void setEventType(EventType eventType){
+        this.model.setEventType(eventType);
     }
 
     public Event saveEvent(){

@@ -1,85 +1,34 @@
 package view;
 
-        import org.apache.commons.fileupload.FileItem;
-        import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-        import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import com.google.gson.Gson;
+import model.Event;
+import model.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import repository.hibernate.CreatorSessionFactory;
 
-        import javax.servlet.ServletException;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import java.io.File;
-        import java.io.IOException;
-        import java.io.PrintWriter;
-        import java.util.Iterator;
-        import java.util.List;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Date;
 
-/**
- * Simple servlet that demonstrates file uploading using org.apache.commons.
- *
- * @author Eugene Suleimanov
- */
+public class Temp {
 
-public class Temp  extends HttpServlet {
+    public static void main(String[] args) {
 
-    static final int fileMaxSize = 100 * 1024;
-    static final int memMaxSize = 100 * 1024;
-
-    private String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploaded_file\\";
-    private File file;
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-
-        String docType = "<!DOCTYPE html>";
-        String title = "File Uploading Demo";
-
-        PrintWriter writer = response.getWriter();
-
-
-        DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-        diskFileItemFactory.setRepository(new File(filePath));
-        diskFileItemFactory.setSizeThreshold(memMaxSize);
-
-        ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
-        upload.setSizeMax(fileMaxSize);
-
-        try {
-            List fileItems = upload.parseRequest(request);
-
-            Iterator iterator = fileItems.iterator();
-
-            writer.println(docType +
-                    "<html>" +
-                    "<head>" +
-                    "<title>" + title + "</title>" +
-                    "</head>" +
-                    "<body>");
-
-            while (iterator.hasNext()) {
-                FileItem fileItem = (FileItem) iterator.next();
-                if (!fileItem.isFormField()) {
-
-                    String fileName = fileItem.getName();
-                    if (fileName.lastIndexOf("\\") >= 0) {
-                        file = new File(filePath +
-                                fileName.substring(fileName.lastIndexOf("\\")));
-                    } else {
-                        file = new File(filePath +
-                                fileName.substring(fileName.lastIndexOf("\\") + 1));
-                    }
-                    fileItem.write(file);
-                    writer.println(fileName + " is uploaded.<br>");
-                }
-            }
-            writer.println("</body>" +
-                    "</html>");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        User user = new User(0l, "name");
+        user = save(user);
+        System.out.println(user);
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+    public static User save(User user){
+        Session session = CreatorSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(user);
+        BigInteger idBI = (BigInteger) session.createSQLQuery("SELECT MAX(id) FROM users").uniqueResult();
+        Long id = idBI.longValue();
+        user.setId(id);
+        transaction.commit();
+        session.close();
+        return user;
     }
 }

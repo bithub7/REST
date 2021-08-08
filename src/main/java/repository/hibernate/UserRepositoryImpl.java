@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.UserRepository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository{
@@ -13,6 +14,9 @@ public class UserRepositoryImpl implements UserRepository{
         Session session = CreatorSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(user);
+        BigInteger idBI = (BigInteger) session.createSQLQuery("SELECT MAX(id) FROM users").uniqueResult();
+        Long id = idBI.longValue();
+        user.setId(id);
         transaction.commit();
         session.close();
         return user;

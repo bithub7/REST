@@ -2,6 +2,7 @@ package service;
 
 import controller.EventController;
 import model.Event;
+import model.EventType;
 
 
 import java.sql.Timestamp;
@@ -11,11 +12,11 @@ public class EventService {
 
     private EventController eventController = new EventController();
 
-    public Event save(Long userId, Long fileId, Timestamp created){
+    public Event save(Long userId, Long fileId, Timestamp created, EventType eventType){
         eventController.setEventUserId(userId);
         eventController.setEventFileId(fileId);
         eventController.setEventCreated(created);
-
+        eventController.setEventType(eventType);
         return eventController.saveEvent();
     }
 

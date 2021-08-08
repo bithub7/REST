@@ -19,6 +19,18 @@ public class File {
     @Column(name = "updated")
     private Timestamp updated;
 
+    public File(){
+
+    }
+
+    public File(Long id, String name, String path, Timestamp created, Timestamp updated) {
+        this.id = id;
+        this.name = name;
+        this.path = path;
+        this.created = created;
+        this.updated = updated;
+    }
+
     public Long getId() {
         return id;
     }
