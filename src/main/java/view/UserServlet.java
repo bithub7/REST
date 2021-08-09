@@ -1,8 +1,8 @@
 package view;
 
-import com.google.gson.Gson;
 import model.User;
 import service.UserService;
+import utils.JSONUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,18 +12,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-
 @WebServlet("/users")
 public class UserServlet extends HttpServlet {
 
     private UserService userService = new UserService();
-    private Gson gson = new Gson();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter printWriter = response.getWriter();
         List<User> userList = userService.getAll();
-        String userListJSON = gson.toJson(userList);
+        String userListJSON = JSONUtils.toJson(userList);
         printWriter.println(userListJSON);
     }
 

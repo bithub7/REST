@@ -32,7 +32,7 @@ public class EventController {
     }
 
     public void setEventType(EventType eventType){
-        this.model.setEventType(eventType);
+        this.model.setEventType(eventType.toString());
     }
 
     public Event saveEvent(){

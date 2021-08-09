@@ -20,9 +20,13 @@ public class EventService {
         return eventController.saveEvent();
     }
 
-    public Event update() {
-    //не понятный момент
-        return null;
+    public Event update(Long eventId, Long userId, Long fileId, Timestamp updated, EventType eventType) {
+        eventController.setEventId(eventId);
+        eventController.setEventUserId(userId);
+        eventController.setEventFileId(fileId);
+        eventController.setEventCreated(updated);
+        eventController.setEventType(eventType);
+        return eventController.updateEvent();
     }
 
     public Event getById(Long id) {

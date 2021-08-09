@@ -24,7 +24,7 @@ public class FileRepositoryImpl implements FileRepository {
         file.setCreated(fileForGetCreated.getCreated());
         Session session = CreatorSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(file);
+        session.update(file);
         transaction.commit();
         session.close();
         return file;

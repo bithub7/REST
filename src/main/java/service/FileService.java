@@ -21,7 +21,7 @@ public class FileService {
         fileController.setFileId(id);
         fileController.setFileName(name);
         fileController.setFilePath(path);
-        fileController.setFileCreated(updated);
+        fileController.setFileUpdated(updated);
         return fileController.updateFile();
     }
 

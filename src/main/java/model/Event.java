@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -16,13 +18,14 @@ public class Event {
     private Long fileId;
     @Column(name = "created")
     private Timestamp created;
-    @Column(name = "event_type")
-    private EventType eventType;
-    @ManyToOne
+    @Column(name = "event_type", length = 30)
+    private String eventType;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonBackReference
     private User user;
 
-    public Event(){
+    public Event() {
 
     }
 
@@ -31,7 +34,7 @@ public class Event {
         this.userId = userId;
         this.fileId = fileId;
         this.created = created;
-        this.eventType = eventType;
+        this.eventType = eventType.toString();
     }
 
     public Long getId() {
@@ -66,11 +69,11 @@ public class Event {
         this.created = created;
     }
 
-    public EventType getEventType() {
+    public String getEventType() {
         return eventType;
     }
 
-    public void setEventType(EventType eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 
@@ -81,8 +84,7 @@ public class Event {
                 ", userId=" + userId +
                 ", fileId=" + fileId +
                 ", created=" + created +
-                ", eventType=" + eventType +
-                ", user=" + user +
+                ", eventType='" + eventType + '\'' +
                 '}';
     }
 }
