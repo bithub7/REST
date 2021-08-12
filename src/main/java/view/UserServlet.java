@@ -26,21 +26,29 @@ public class UserServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter printWriter = response.getWriter();
         String name = request.getParameter("name");
-        userService.save(name);
-        doGet(request, response);
+        User user = userService.save(name);
+        String userJSON = JSONUtils.toJson(user);
+        printWriter.println(userJSON);
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter printWriter = response.getWriter();
         Long id = Long.valueOf(request.getParameter("id"));
         String name = request.getParameter("name");
-        userService.update(id, name);
-        doGet(request, response);
+        User user = userService.update(id, name);
+        String userJSON = JSONUtils.toJson(user);
+        printWriter.println(userJSON);
     }
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter printWriter = response.getWriter();
         Long id = Long.valueOf(request.getParameter("id"));
         userService.deleteById(id);
-        doGet(request, response);
+        printWriter.println("User with id "+ id +" was remote");
     }
 }

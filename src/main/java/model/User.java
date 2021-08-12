@@ -15,7 +15,7 @@ public class User {
     private Long id;
     @Column(name = "name", length = 256)
     private String name;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Event> events;
 

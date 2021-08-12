@@ -6,7 +6,6 @@ import service.EventService;
 import service.FileService;
 import utils.JSONUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,28 +33,36 @@ public class FileServlet extends HttpServlet {
         printWriter.println(fileListJSON );
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Long user_id = Long.valueOf(request.getParameter("user_id"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter printWriter = response.getWriter();
+        Long userId = Long.valueOf(request.getParameter("user_id"));
         String fileName = request.getParameter("file");
         Timestamp created =  new Timestamp(new Date().getTime());
         File file = fileService.save(fileName, null, created);
-        eventService.save(user_id, file.getId(), created, EventType.CREATE);
-        doGet(request, response);
+        eventService.save(userId, file.getId(), created, EventType.CREATE);
+        String fileJSON = JSONUtils.toJson(file);
+        printWriter.println(fileJSON);
     }
 
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Long user_id = Long.valueOf(request.getParameter("user_id"));
-        Long file_id = Long.valueOf(request.getParameter("file_id"));
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter printWriter = response.getWriter();
+        Long userId = Long.valueOf(request.getParameter("user_id"));
+        Long fileId = Long.valueOf(request.getParameter("file_id"));
         String fileName = request.getParameter("file");
         Timestamp updated =  new Timestamp(new Date().getTime());
-        fileService.update(file_id, fileName, null, updated);
-        eventService.save(user_id, file_id, updated, EventType.UPDATE);
-        doGet(request, response);
+        File file = fileService.update(fileId, fileName, null, updated);
+        eventService.save(userId, fileId, updated, EventType.UPDATE);
+        String fileJSON = JSONUtils.toJson(file);
+        printWriter.println(fileJSON);
     }
 
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter printWriter = response.getWriter();
         Long id = Long.valueOf(request.getParameter("id"));
         fileService.deleteById(id);
-        doGet(request, response);
+        printWriter.println("File with id "+ id +" was remote ");
     }
 }
