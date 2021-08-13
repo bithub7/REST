@@ -70,8 +70,6 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.12.4</version>
     </dependency>
-
-
   </dependencies>
 
   <build>
@@ -125,12 +123,11 @@
         <artifactId>flyway-maven-plugin</artifactId>
         <version>7.9.1</version>
         <configuration>
-          <user>root</user>
-          <password>1111</password>
-          <url>jdbc:mysql://localhost/rest</url>
+          <user>c93d20f0a79ba</user>
+          <password>1f47ea43</password>
+          <url>us-cdbr-east-04.cleardb.com</url>
         </configuration>
       </plugin>
     </plugins>
-
   </build>
 </project>
