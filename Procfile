@@ -1,0 +1,1 @@
+release: ./mvn flyway:migrate
