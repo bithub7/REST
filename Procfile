@@ -1,1 +1,1 @@
-release: ./mvn flyway:migrate
+web: java -jar target/REST-1.0-SNAPSHOT.war
