@@ -1,1 +1,1 @@
-web: java -jar target/REST-1.0-SNAPSHOT.war
+ web java $JAVA_OPTS -jar webapp-runner.jar $WEBAPP_RUNNER_OPTS --port $PORT target/servletsProject.war 
