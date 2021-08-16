@@ -14,8 +14,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -95,9 +95,9 @@
         <artifactId>flyway-maven-plugin</artifactId>
         <version>7.9.1</version>
         <configuration>
-          <user>c93d20f0a79ba</user>
-          <password>1f47ea43</password>
-          <url>url</url>
+          <user>root</user>
+          <password>1111</password>
+          <url>jdbc:mysql://localhost/rest_db</url>
           <locations>
             <location>filesystem:src/main/resources/db.migration</location>
           </locations>
