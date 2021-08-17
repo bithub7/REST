@@ -94,9 +94,8 @@
           <groupId>com.heroku.sdk</groupId>
           <artifactId>heroku-maven-plugin</artifactId>
           <version>3.0.3</version>
-        </plugin>ry
+        </plugin>
         
-
       <plugin>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
